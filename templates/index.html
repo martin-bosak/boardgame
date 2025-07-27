@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terraforming Mars</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Terraforming Mars</h1>
+    <div id="game-info">
+        <h2>Players</h2>
+        <ul>
+            {% for player in game.players %}
+                <li>{{ player.name }} - {{ player.corporation.name }} ({{ player.resources.megacredits }} M€)</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Global Parameters</h2>
+        <p>Temperature: {{ game.board.temperature }}°C</p>
+        <p>Oxygen: {{ game.board.oxygen_level }}%</p>
+        <p>Oceans: {{ game.board.ocean_tiles }}</p>
+    </div>
+
+    <div id="player-hand">
+        <h2>{{ game.current_player.name }}'s Hand</h2>
+        <div class="cards-container">
+            {% for card in game.current_player.cards %}
+                <div class="card">
+                    <h3>{{ card.name }} ({{ card.cost }} M€)</h3>
+                    <p>Type: {{ card.card_type }}</p>
+                    <p>Tags: {{ card.tags|join(', ') }}</p>
+                    <p>{{ card.effect_description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="game-board">
+        <!-- The game board will be rendered here -->
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html> 
